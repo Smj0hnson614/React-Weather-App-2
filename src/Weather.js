@@ -5,7 +5,7 @@ import "./Weather.css";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });
-  const [city, setCity] = useState{props.defaultCity};
+  const [city, setCity] = useState(props.defaultCity);
   function handleResponse(response) {
     console.log(response.data);
     setWeatherData({
@@ -14,7 +14,7 @@ export default function Weather(props) {
       humidity: response.data.main.humidity,
       date: new Date(response.data.dt * 1000),
       description: response.data.weather[0].description,
-      iconUrl: "https://ssl.gstatic.com/onebox/weather/64/sunny.png",
+      iconUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       wind: response.data.wind.speed,
       city: response.data.name,
     });
@@ -24,7 +24,6 @@ export default function Weather(props) {
     const apiKey = "360btabo4f1196741527047834a50bb8";
     let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial`;
     axios.get(apiKey).then(handleResponse);
-
   }
 
   function handleSubmit(event) {
@@ -33,7 +32,7 @@ export default function Weather(props) {
   }
 
   function handleCityChange(event) {
-    setCity(event.target.value)
+    setCity(event.target.value);
   }
 
   if (weatherData.ready) {
@@ -64,6 +63,6 @@ export default function Weather(props) {
     );
   } else {
     search();
-     return "Loading...";
+    return "Loading...";
   }
 }
